@@ -1,0 +1,60 @@
+﻿<Window x:Class="OllamaWPF.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ollama Folder Client" Width="700" Height="520" WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="🤖 Модель:" VerticalAlignment="Center" Margin="0,0,8,0"/>
+            <ComboBox x:Name="ModelCombo" Width="280" SelectionChanged="ModelCombo_SelectionChanged"/>
+            <CheckBox x:Name="UseStreamCheck" Content="⚡ размышление" IsChecked="False" VerticalAlignment="Center" Margin="10,0,10,0"/>
+            <Button Grid.Column="2" x:Name="CopyContextBtn" Content="📋 Копировать контекст" Click="CopyContext_Click" Width="140" Margin="10,0,10,0"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="0,0,0,8">
+            <Button Content="📁 Выбрать папку проекта" Click="PickFolder_Click" Width="160" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="PathLabel" Margin="170,5,0,0" Text="Папка не выбрана" Foreground="Gray"/>
+        </Grid>
+
+        <!-- Управление историей -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,8">
+            <CheckBox x:Name="UseContextCheck" Content="📦 Контекст проекта" IsChecked="True" VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <CheckBox x:Name="UseHistoryCheck" Content="💬 История диалога" IsChecked="False" VerticalAlignment="Center" Margin="0,0,15,0"/>
+            <Button Content="🗑 Очистить" Click="ClearHistory_Click" Width="80" Margin="0,0,8,0"/>
+            <Button Content="💾 Сохранить в .txt" Click="SaveHistory_Click" Width="130" Margin="0,0,8,0"/>
+            <TextBlock x:Name="HistoryInfo" Text="Сообщений: 0" Foreground="Gray" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!-- Занимает всё свободное место -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Кнопка занимает только свою ширину -->
+            </Grid.ColumnDefinitions>
+
+            <TextBox x:Name="QuestionBox" 
+             Grid.Column="0" 
+             Margin="0,0,10,0" Height="60"
+             MinWidth="200" AcceptsReturn="True" AcceptsTab="True" MaxHeight="60"
+             Text=""/>
+
+            <Button x:Name="AskBtn" 
+            Grid.Column="1" 
+            Content="Отправить" 
+            Click="Ask_Click" 
+            Width="100" 
+            Height="{Binding ActualHeight, ElementName=QuestionBox}" 
+            VerticalAlignment="Center"/>
+        </Grid>
+
+        <TextBox Grid.Row="4" x:Name="OutputBox" IsReadOnly="True" TextWrapping="Wrap" 
+                 AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Background="#F9F9F9" FontFamily="Consolas"/>
+    </Grid>
+</Window>
