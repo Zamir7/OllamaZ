@@ -1,0 +1,2 @@
+# OllamaZ
+ollama helper
